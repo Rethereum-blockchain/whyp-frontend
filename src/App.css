@@ -1,0 +1,92 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #121212, #1E1E1E); /* Modern gradient background */
+  color: #FFFFFF;
+  overflow-x: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+.wrap-hyp-container {
+  max-width: 600px;
+  margin: 250px auto 0;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9; /* Keeping it light but consider a subtle gradient here too */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Deeper shadow for a floating effect */
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border for depth */
+}
+.action-btn {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 20px; /* More rounded corners */
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(45deg, #007bff, #0056b3); /* Gradient effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.action-btn:hover {
+  transform: scale(1.05); /* Slight scale up */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+.input-field {
+  width: 80%;
+  padding: 10px;
+  margin: 15px 0;
+  border: 2px solid #ccc; /* Thicker border for emphasis */
+  border-radius: 20px; /* More rounded corners */
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.input-field:focus {
+  border-color: #007bff; /* Highlight on focus */
+}
+.message-box {
+  margin-top: 20px;
+  padding: 10px;
+  color: #333;
+  background-color: #e2e3e5; /* Consider a light gradient here */
+  border-left: 5px solid #007bff;
+  border-radius: 4px;
+  animation: pulse 2s infinite; /* Gentle pulse effect */
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 123, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0); }
+}
+.account-display {
+  font-size: 16px;
+  margin: 20px 0;
+  color: #555; /* Adjust the color if needed for visibility */
+  /* Add more styles if necessary */
+}
+.app-header {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-start; /* Align content to the left */
+  align-items: center;
+}
+
+.app-logo {
+  height: 50px; /* Adjust the size as needed */
+}
+
+
