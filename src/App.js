@@ -146,7 +146,7 @@ function App() {
       </header>
       <div className="wrap-hyp-container" style={{ marginTop: "250px", textAlign: "center" }}>
         {!account ? (
-          <button onClick={connectWallet} className="action-btn">Connect & Switch to Hypra Mainnet</button>
+          <button onClick={connectWallet} className="action-btn">Connect Wallet</button>
         ) : (
           <>
             <div className="account-display">Welcome, {account.substring(0, 6)}...{account.substring(account.length - 4)}</div>
