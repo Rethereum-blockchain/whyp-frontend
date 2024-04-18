@@ -28,22 +28,29 @@ function App() {
   async function switchToHypraMainnet() {
     try {
       await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: Web3.utils.toHex(622277) }], // Hexadecimal chainId for Hypra Mainnet
+        method: 'wallet_addEthereumChain',
+        params: [{
+          chainId: Web3.utils.toHex(622277),
+          chainName: 'Hypra Mainnet',
+          nativeCurrency: {
+            name: 'HYP',
+            symbol: 'HYP', // 2-6 characters long
+            decimals: 18,
+          },
+          rpcUrls: ['https://rpc.hypra.network/'],
+          blockExplorerUrls: ['https://explorer.hypra.network/'],
+        }],
       });
+      setMessage('Switched to Hypra Mainnet successfully.');
     } catch (error) {
-      if (error.code === 4902) {
-        console.error('The Hypra Mainnet is not available in your MetaMask. Please add it manually.');
-        setMessage('The Hypra Mainnet is not available in your MetaMask. Please add it manually.');
-      } else {
-        console.error('Error switching to Hypra Mainnet:', error);
-        setMessage('Error switching to Hypra Mainnet. Please try again or switch manually.');
-      }
+      console.error('Error switching to Hypra Mainnet:', error);
+      setMessage('Error switching to Hypra Mainnet. Please try again or add it manually.');
     }
   }
 
   const connectWallet = async () => {
     try {
+      await switchToHypraMainnet(); // Ensure we're on the Hypra network
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       setAccount(accounts[0]);
       setMessage("Wallet connected successfully.");
@@ -107,6 +114,28 @@ function App() {
     }
   };
 
+  const addwHYPToWallet = async () => {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20', // Must specify this for tokens
+          options: {
+            address: wHYPContractAddress, // The contract address for wHYP
+            symbol: 'wHYP', // A string symbol of the token
+            decimals: 18, // The number of decimals in the token
+            image: '', // A string URL of the token logo
+          },
+        },
+      });
+      setMessage('wHYP added to wallet!');
+    } catch (error) {
+      console.error('Failed to add wHYP to wallet:', error);
+      setMessage('Failed to add wHYP. Please try again.');
+    }
+  };
+  
+
   return (
     <>
       <header className="app-header">
@@ -117,7 +146,7 @@ function App() {
       </header>
       <div className="wrap-hyp-container" style={{ marginTop: "250px", textAlign: "center" }}>
         {!account ? (
-          <button onClick={connectWallet} className="action-btn">Connect Wallet</button>
+          <button onClick={connectWallet} className="action-btn">Connect & Switch to Hypra Mainnet</button>
         ) : (
           <>
             <div className="account-display">Welcome, {account.substring(0, 6)}...{account.substring(account.length - 4)}</div>
@@ -131,6 +160,7 @@ function App() {
             <div className="action-buttons">
               <button onClick={handleDeposit} className="action-btn">Wrap HYP</button>
               <button onClick={handleWithdraw} className="action-btn">Unwrap HYP</button>
+              <button onClick={addwHYPToWallet} className="action-btn">Import wHYP to Wallet</button>
             </div>
             {message && <div className="message-box">{message}</div>}
           </>
@@ -138,6 +168,7 @@ function App() {
       </div>
     </>
   );
+   
 }
 
 export default App;
