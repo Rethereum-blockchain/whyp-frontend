@@ -101,3 +101,32 @@ body, html {
 .header-button:hover {
   background-color: #003377; /* Darker shade for hover effect */
 }
+
+@keyframes pulseAnimation {
+  0% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+.wrap-unwrap-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: transparent; /* Make the text color transparent to see the gradient */
+  font-family: 'Poppins', sans-serif; /* Modern, clean font */
+  text-transform: uppercase; /* Adds formality */
+  letter-spacing: 2px; /* Enhances readability */
+  background: linear-gradient(45deg, #6e45e2, #88d3ce); /* Subtle gradient */
+  -webkit-background-clip: text;
+  animation: pulseAnimation 3s ease-in-out infinite;
+}
+
+.wrap-unwrap-title:hover {
+  animation-play-state: paused; /* Pause the animation on hover */
+}
+
