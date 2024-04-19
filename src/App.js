@@ -28,23 +28,36 @@ function App() {
   async function switchToHypraMainnet() {
     try {
       await window.ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [{
-          chainId: Web3.utils.toHex(622277),
-          chainName: 'Hypra Mainnet',
-          nativeCurrency: {
-            name: 'HYP',
-            symbol: 'HYP', // 2-6 characters long
-            decimals: 18,
-          },
-          rpcUrls: ['https://rpc.hypra.network/'],
-          blockExplorerUrls: ['https://explorer.hypra.network/'],
-        }],
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: Web3.utils.toHex(622277) }], // Hypra Mainnet Chain ID
       });
       setMessage('Switched to Hypra Mainnet successfully.');
-    } catch (error) {
-      console.error('Error switching to Hypra Mainnet:', error);
-      setMessage('Error switching to Hypra Mainnet. Please try again or add it manually.');
+    } catch (switchError) {
+      if (switchError.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [{
+              chainId: Web3.utils.toHex(622277),
+              chainName: 'Hypra Mainnet',
+              nativeCurrency: {
+                name: 'HYP',
+                symbol: 'HYP',
+                decimals: 18,
+              },
+              rpcUrls: ['https://rpc.hypra.network/'],
+              blockExplorerUrls: ['https://explorer.hypra.network/'],
+            }],
+          });
+          setMessage('Switched to Hypra Mainnet successfully.');
+        } catch (addError) {
+          console.error('Error adding Hypra Mainnet:', addError);
+          setMessage('Error adding Hypra Mainnet. Please try again or add it manually.');
+        }
+      } else {
+        console.error('Error switching to Hypra Mainnet:', switchError);
+        setMessage('Error switching to Hypra Mainnet. Please try again or add it manually.');
+      }
     }
   }
 
@@ -139,11 +152,15 @@ function App() {
   return (
     <>
       <header className="app-header">
-        <a href="https://www.hypra.network/" target="_blank" rel="noopener noreferrer">
-          <img src={logo} alt="Hypra Logo" className="app-logo" />
-        </a>
-        {/* Other header content here if necessary */}
-      </header>
+  <a href="https://www.hypra.network/" target="_blank" rel="noopener noreferrer">
+    <img src={logo} alt="Hypra Logo" className="app-logo" />
+  </a>
+  <nav>
+    <a href="https://www.hypra.network/" target="_blank" rel="noopener noreferrer" className="header-button">Home</a>
+    <a href="https://explorer.hypra.network/" target="_blank" rel="noopener noreferrer" className="header-button">Explorer</a>
+  </nav>
+  {/* Other header content here if necessary */}
+</header>
       <div className="wrap-hyp-container" style={{ marginTop: "250px", textAlign: "center" }}>
         {!account ? (
           <button onClick={connectWallet} className="action-btn">Connect Wallet</button>
@@ -172,3 +189,4 @@ function App() {
 }
 
 export default App;
+
