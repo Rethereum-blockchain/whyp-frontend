@@ -152,16 +152,20 @@ function App() {
   return (
     <>
       <header className="app-header">
-  <a href="https://www.hypra.network/" target="_blank" rel="noopener noreferrer">
-    <img src={logo} alt="Hypra Logo" className="app-logo" />
-  </a>
-  <nav>
-    <a href="https://www.hypra.network/" target="_blank" rel="noopener noreferrer" className="header-button">Home</a>
-    <a href="https://explorer.hypra.network/" target="_blank" rel="noopener noreferrer" className="header-button">Explorer</a>
-  </nav>
-  {/* Other header content here if necessary */}
-</header>
-      <div className="wrap-hyp-container" style={{ marginTop: "250px", textAlign: "center" }}>
+        <a href="https://www.hypra.network/" target="_blank" rel="noopener noreferrer">
+          <img src={logo} alt="Hypra Logo" className="app-logo" />
+        </a>
+        <nav>
+          <a href="https://www.hypra.network/" target="_blank" rel="noopener noreferrer" className="header-button">Home</a>
+          <a href="https://explorer.hypra.network/" target="_blank" rel="noopener noreferrer" className="header-button">Explorer</a>
+        </nav>
+        {/* Other header content here if necessary */}
+      </header>
+      {/* Moved the Wrap HYP / Unwrap HYP text outside the main container */}
+      {!account && (
+        <div className="wrap-unwrap-title" style={{ textAlign: "center", marginTop: "200px" }}>Wrap HYP / Unwrap HYP</div>
+      )}
+      <div className="wrap-hyp-container" style={{ marginTop: account ? "250px" : "20px", textAlign: "center" }}>
         {!account ? (
           <button onClick={connectWallet} className="action-btn">Connect Wallet</button>
         ) : (
